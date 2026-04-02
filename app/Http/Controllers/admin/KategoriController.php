@@ -58,10 +58,18 @@ class KategoriController extends Controller
     // ================= HAPUS =================
 public function hapus($id)
 {
+    $cek = DB::table('buku')
+        ->where('id_kategori', $id)
+        ->count();
+
+    if($cek > 0){
+        return redirect()->back()->with('error', 'Kategori masih digunakan di buku!');
+    }
+
     DB::table('kategori')
         ->where('id_kategori', $id)
         ->delete();
 
-    return redirect()->route('admin.kategori');
+    return redirect()->back()->with('success', 'Kategori berhasil dihapus!');
 }
 }

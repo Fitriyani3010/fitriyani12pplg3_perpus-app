@@ -452,7 +452,7 @@ table th{
                 <td>{{ $p->no_telp }}</td>
                 <td>{{ $p->status }}</td>
                 <td>
-                    <a href="{{ route('admin.petugas.destroy', $p->id_user) }}" onclick="return confirm('Yakin hapus?')">
+                    <a href="{{ route('petugas.destroy', $p->id_user) }}" onclick="return confirm('Yakin hapus?')">
                         <button class="btn-hapus"><i class="fas fa-trash"></i></button>
                     </a>
                 </td>

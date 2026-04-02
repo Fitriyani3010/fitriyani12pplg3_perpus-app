@@ -46,7 +46,7 @@ use App\Http\Controllers\Admin\KategoriController;
 Route::get('/admin/kategori', [KategoriController::class, 'index'])->name('admin.kategori');
 Route::post('/admin/kategori/store', [KategoriController::class, 'simpan'])->name('admin.kategori.store');
 Route::post('/admin/kategori/update', [KategoriController::class, 'update'])->name('admin.kategori.update');
-Route::get('/admin/kategori/hapus/{id}', [KategoriController::class, 'hapus'])->name('admin.kategori.hapus');
+Route::post('/admin/kategori/hapus/{id}', [KategoriController::class, 'hapus'])->name('admin.kategori.hapus');
 
 use App\Http\Controllers\Admin\AnggotaController;
 
@@ -66,3 +66,8 @@ use App\Http\Controllers\Admin\PeminjamanController;
     Route::post('/admin/peminjaman/denda', [PeminjamanController::class,'updateDenda'])->name('peminjaman.denda');
     Route::post('/admin/peminjaman/lama', [PeminjamanController::class,'updateLama'])->name('peminjaman.lama');
     Route::get('/admin/peminjaman/kembalikan/{id}', [PeminjamanController::class,'kembalikan'])->name('peminjaman.kembalikan');
+
+use App\Http\Controllers\Petugas\DashboardController as PetugasDashboardController;
+
+Route::get('/petugas/dashboard', [PetugasDashboardController::class,'index'])
+    ->name('petugas.dashboard');

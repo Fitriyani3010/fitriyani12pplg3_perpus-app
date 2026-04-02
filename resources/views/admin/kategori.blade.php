@@ -518,7 +518,17 @@ table img{
             <i class="fas fa-plus"></i> Tambah Kategori
         </button>
     </div>
+@if(session('error'))
+    <div style="background:#dc3545;color:white;padding:12px;border-radius:10px;margin-bottom:15px;">
+        {{ session('error') }}
+    </div>
+@endif
 
+@if(session('success'))
+    <div style="background:#4CAF50;color:white;padding:12px;border-radius:10px;margin-bottom:15px;">
+        {{ session('success') }}
+    </div>
+@endif
     <div class="table-box">
         <table>
             <tr>
@@ -534,7 +544,8 @@ table img{
 <td>
     <button type="button" class="action-btn btn-edit" onclick="openEdit('{{ $k->id_kategori }}','{{ $k->nama_kategori }}')">Edit</button>
 
-    <form action="{{ route('admin.kategori.hapus', $k->id_kategori) }}" method="GET" style="display:inline;">
+    <form action="{{ route('admin.kategori.hapus', $k->id_kategori) }}" method="POST" style="display:inline;">
+    @csrf
     <button type="submit" class="action-btn btn-delete" onclick="return confirm('Hapus?')">Hapus</button>
 </form>
 </td>

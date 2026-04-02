@@ -27,7 +27,7 @@ class PetugasController extends Controller
     {
         // Validasi input
         $request->validate([
-            'username' => 'required|unique:users,username',
+            'username' => 'required|unique:user,username',
             'password' => 'required',
             'alamat'   => 'required',
             'no_telp'  => 'required'
@@ -51,7 +51,7 @@ class PetugasController extends Controller
     // ================== DESTROY ==================
     public function destroy($id)
     {
-        User::where('id', $id)->where('role', 'petugas')->delete();
+        User::where('id_user', $id)->where('role', 'petugas')->delete();
 
         return redirect()->back()->with('success', 'Petugas berhasil dihapus!');
     }
