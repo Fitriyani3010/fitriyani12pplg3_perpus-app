@@ -15,7 +15,7 @@ class Buku extends Model
 
     protected $fillable = [
         'judul',
-        'id_kategori', // jika ada kategori
+        'id_kategori', 
         'stok',
         'pengarang',
         'penerbit',
@@ -27,4 +27,6 @@ class Buku extends Model
     {
         return $this->hasMany(Peminjaman::class, 'id_buku', 'id_buku');
     }
+
+  
 }

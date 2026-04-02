@@ -1,10 +1,9 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Dashboard Petugas</title>
+<title>Dashboard Anggota</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <style>
 body{
@@ -284,123 +283,73 @@ body{
     flex-wrap:wrap;
 }
 
-.table-box{
-    flex:2;
+.section-bawah{
+    margin-top:40px;
+    display:flex;
+    gap:20px;
+    flex-wrap:wrap;
+}
+
+.box{
     background:white;
     padding:20px;
     border-radius:20px;
-    box-shadow:0 8px 15px rgba(0,0,0,0.08);
+    box-shadow:0 8px 15px rgba(0,0,0,0.1);
 }
 
-.table-box h3{
-    margin-bottom:15px;
+.box-buku{
+    flex:1;
 }
 
-table{
-    width:100%;
-    border-collapse:collapse;
+.box-info{
+    flex:1;
 }
 
-table th, table td{
+.buku-grid{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:15px;
+    margin-top:15px;
+}
+
+.buku-item{
+    background:#f3f4f6;
     padding:10px;
-    text-align:left;
-    border-bottom:1px solid #eee;
-    font-size:14px;
-}
-table th{
-    background:#e3ecff;   
-    color:#1e3a8a;        
-    font-weight:600;
-}
-
-table tr:hover td{
-    background:#e9f0ff;
-    transition:0.2s;
-}
-
-.status{
-    padding:5px 10px;
-    border-radius:20px;
-    font-size:12px;
-    font-weight:bold;
-    color:white;
-}
-
-.status.aktif{
-    background:#4CAF50;
-}
-
-.status.terlambat{
-    background:#dc3545;
-}
-
-/* NOTIFICATION BOX */
-.notif-box{
-    flex:2;
-    background:white;
-    padding:20px;
-    border-radius:20px;
-    box-shadow:0 8px 15px rgba(0,0,0,0.08);
-}
-
-.notif-item{
-    background:#f8f9fc;
-    padding:15px;
-    border-radius:15px;
-    margin-bottom:15px;
-    font-size:14px;
-}
-
-.notif-item span{
-    font-weight:bold;
-    color:#dc3545;
-}
-
-.chart-box{
-    margin-top:1px;
-    background:white;
-    padding:25px;
-    border-radius:20px;
-    box-shadow:0 8px 15px rgba(0,0,0,0.08);
+    border-radius:12px;
+    text-align:center;
     transition:0.3s;
 }
 
-.chart-box:hover{
+.buku-item:hover{
     transform:translateY(-5px);
-    box-shadow:0 12px 20px rgba(0,0,0,0.15);
-}
-.lihat-wrapper{
-    text-align:center;
-    margin-top:25px;
 }
 
-.lihat-btn{
+.buku-item img{
+    width:100%;
+    height:120px;
+    object-fit:cover;
+    border-radius:10px;
+}
+
+.btn-lihat{
     display:inline-block;
-    text-decoration:none;
+    margin-top:15px;
     background:#1e3a8a;
     color:white;
-    padding:10px 25px;
-    border-radius:30px;
-    font-size:14px;
-    font-weight:500;
+    padding:10px 18px;
+    border-radius:10px;
+    text-decoration:none;
     transition:0.3s;
 }
 
-.lihat-btn i{
-    margin-right:8px;
-}
-
-.lihat-btn:hover{
-    background:#163072;
-    transform:translateY(-3px);
-    box-shadow:0 10px 18px rgba(0,0,0,0.2);
+.btn-lihat:hover{
+    background:#162c6b;
 }
 </style>
 </head>
 
 <body>
 
-<!-- HEADER -->
 <div class="header">
     <div class="logo">
         <img src="{{ asset('assets/images/logo.png') }}">
@@ -409,11 +358,11 @@ table tr:hover td{
 
     <div class="header-right">
 
-        <!-- PROFILE -->
+        <!-- FOTO PROFIL -->
         <a href="#" style="text-decoration:none;">
             <div class="profile-top">
                 @if(!empty($user->foto))
-                    <img src="{{ asset('uploads/'.$user->foto) }}">
+                    <img src="{{ asset('petugas/uploads/'.$user->foto) }}">
                 @else
                     <div class="initial">
                         {{ strtoupper(substr($username,0,1)) }}
@@ -423,9 +372,8 @@ table tr:hover td{
         </a>
 
         <!-- LOGOUT -->
-        <a href="{{ route('logout') }}" class="logout-btn">
-            <i class="fas fa-sign-out-alt"></i>
-            Logout
+        <a href="/logout" class="logout-btn">
+            <i class="fas fa-sign-out-alt"></i> Logout
         </a>
 
     </div>
@@ -437,7 +385,7 @@ table tr:hover td{
     <div class="profile">
         <div class="avatar">
             @if(!empty($user->foto))
-                <img src="{{ asset('uploads/'.$user->foto) }}">
+                <img src="{{ asset('petugas/uploads/'.$user->foto) }}">
             @else
                 {{ strtoupper(substr($username,0,1)) }}
             @endif
@@ -446,28 +394,20 @@ table tr:hover td{
     </div>
 
     <div class="menu">
-        <a href="{{ route('petugas.dashboard') }}" class="active">
+        <a href="{{ route('anggota.dashboard') }}" class="{{ $halaman=='dashboard'?'active':'' }}">
             <i class="fas fa-home"></i>Dashboard
         </a>
 
-        <a href="/petugas/buku">
-            <i class="fas fa-book"></i>Data Buku
+        <a href="/anggota/buku" class="{{ $halaman=='buku'?'active':'' }}">
+            <i class="fas fa-book"></i>Daftar buku
         </a>
 
-        <a href="/petugas/anggota">
-            <i class="fas fa-users"></i>Data Anggota
-        </a>
-
-        <a href="/petugas/peminjaman">
+        <a href="/anggota/peminjaman" class="{{ $halaman=='peminjaman'?'active':'' }}">
             <i class="fas fa-book-reader"></i>Peminjaman
         </a>
 
-        <a href="/petugas/pengembalian">
+        <a href="/anggota/pengembalian" class="{{ $halaman=='pengembalian'?'active':'' }}">
             <i class="fas fa-undo"></i>Pengembalian
-        </a>
-
-        <a href="/petugas/kategori">
-            <i class="fas fa-filter"></i>Manajemen Kategori
         </a>
     </div>
 
@@ -475,7 +415,6 @@ table tr:hover td{
 
 <!-- CONTENT -->
 <div class="content">
-
     <div class="cards">
 
         <div class="stat-card blue">
@@ -484,105 +423,61 @@ table tr:hover td{
             Total Buku
         </div>
 
-        <div class="stat-card green">
-            <i class="fas fa-users"></i>
-            <h3>{{ $total_anggota }}</h3>
-            Total Anggota
-        </div>
-
         <div class="stat-card yellow">
             <i class="fas fa-book-reader"></i>
             <h3>{{ $total_pinjam }}</h3>
             Peminjaman Aktif
         </div>
 
+        <div class="stat-card green">
+            <i class="fas fa-history"></i>
+            <h3>{{ $total_riwayat }}</h3>
+            Total Riwayat
+        </div>
+
         <div class="stat-card lightblue">
-            <i class="fas fa-undo"></i>
-            <h3>{{ $total_kembali_hariini }}</h3>
-            Pengembalian Hari Ini
+            <i class="fas fa-money-bill"></i>
+            <h3>{{ $total_denda }}</h3>
+            Denda Belum Dibayar
         </div>
 
     </div>
 
-    <div class="dashboard-bottom">
+    <div class="section-bawah">
 
-        <!-- TABLE -->
-        <div class="table-box">
-            <table>
-                <tr>
-                    <th>Nama</th>
-                    <th>Judul Buku</th>
-                    <th>Tanggal</th>
-                    <th>Status</th>
-                </tr>
+        <!-- TOP BUKU -->
+        <div class="box">
+            <h3>📚 Buku Paling Banyak Dipinjam</h3>
 
-                @forelse($peminjaman_terbaru as $row)
-                    @php
-                        $status_class = $row->selisih_hari > 7 ? 'terlambat' : 'aktif';
-                        $status_text = $row->selisih_hari > 7 ? 'Terlambat' : 'Aktif';
-                    @endphp
+            <div class="buku-grid">
+                @foreach($top_buku as $b)
+                <div class="buku-item">
+                    @if(!empty($b->cover))
+                        <img src="{{ asset('uploads/'.$b->cover) }}">
+                    @else
+                        <img src="{{ asset('assets/default-book.png') }}">
+                    @endif
 
-                    <tr>
-                        <td>{{ $row->username }}</td>
-                        <td>{{ $row->judul }}</td>
-                        <td>{{ $row->tgl_peminjaman }}</td>
-                        <td>
-                            <span class="status {{ $status_class }}">
-                                {{ $status_text }}
-                            </span>
-                        </td>
-                    </tr>
-                @empty
-                    <tr><td colspan="4">Belum ada peminjaman.</td></tr>
-                @endforelse
-            </table>
-
-            <div class="lihat-wrapper">
-                <a href="/petugas/peminjaman" class="lihat-btn">
-                    <i class="fas fa-eye"></i> Lihat Selengkapnya
-                </a>
+                    <p><strong>{{ $b->judul }}</strong></p>
+                    <small>{{ $b->total_pinjam }}x dipinjam</small>
+                </div>
+                @endforeach
             </div>
+
+            <a href="#" class="btn-lihat">Lihat Semua Buku</a>
         </div>
 
-        <!-- CHART -->
-        <div class="chart-box">
-            <h3>Statistik Peminjaman 7 Hari Terakhir</h3>
-            <canvas id="myChart"></canvas>
+        <!-- INFO -->
+        <div class="box">
+            <h3>📢 Info Perpustakaan</h3>
+            <p>📌 Lama peminjaman 7 hari</p>
+            <p>📌 Keterlambatan dikenakan denda 1000 perhari</p>
+            <p>📌 Buku harus dikembalikan dengan kondisi seperti awal meminjam</p>
+            <p>📌 Buku hilang atau rusak wajib ganti</p>
         </div>
 
     </div>
 </div>
-
-<script>
-const ctx = document.getElementById('myChart');
-
-new Chart(ctx, {
-    type: 'line',
-    data: {
-        labels: [
-            @for($i=6; $i>=0; $i--)
-                "{{ \Carbon\Carbon::now()->subDays($i)->format('d M') }}",
-            @endfor
-        ],
-        datasets: [
-        {
-            label: 'Peminjaman',
-            data: @json($data_chart),
-            borderColor: '#3b82f6',
-            borderWidth: 3,
-            tension: 0.3
-        },
-        {
-            label: 'Pengembalian',
-            data: @json($data_kembali),
-            borderColor: '#f4b400',
-            borderWidth: 3,
-            tension: 0.3
-        }
-        ]
-    }
-});
-</script>
 
 </body>
 </html>

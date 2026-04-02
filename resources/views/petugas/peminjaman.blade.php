@@ -1,12 +1,13 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Dashboard Petugas</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <title>Data Peminjaman</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<style>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
+
+    <style>
 body{
     margin:0;
     font-family:'Segoe UI',sans-serif;
@@ -235,65 +236,11 @@ body{
 .sidebar.closed + .content{
     margin-left:80px;
 }
-
-/* STAT CARDS */
-.cards{
-    display:flex;
-    gap:20px;
-    flex-wrap:wrap;
-}
-
-.stat-card{
-    flex:1;
-    min-width:200px;
+.table-box{
+    background:white;
     padding:25px;
     border-radius:20px;
-    color:white;
-    box-shadow:0 8px 15px rgba(0,0,0,0.1);
-    transition:0.3s;
-    cursor:pointer;
-}
-
-.stat-card:hover{
-    transform:translateY(-5px);
-    box-shadow:0 12px 20px rgba(0,0,0,0.2);
-}
-
-.stat-card h3{
-    font-size:28px;
-    margin:10px 0;
-}
-
-.stat-card i{
-    font-size:30px;
-    margin-bottom:10px;
-    display:block;
-}
-
-/* WARNA PETUGAS */
-.blue{background:#6c8bd5;}
-.green{background:#4CAF50;}
-.lightblue{background:#89aee6;}
-.yellow{background:#f4b400;}
-
-/* DASHBOARD BOTTOM SECTION */
-.dashboard-bottom{
-    margin-top:40px;
-    display:flex;
-    gap:20px;
-    flex-wrap:wrap;
-}
-
-.table-box{
-    flex:2;
-    background:white;
-    padding:20px;
-    border-radius:20px;
     box-shadow:0 8px 15px rgba(0,0,0,0.08);
-}
-
-.table-box h3{
-    margin-bottom:15px;
 }
 
 table{
@@ -302,105 +249,119 @@ table{
 }
 
 table th, table td{
-    padding:10px;
-    text-align:left;
+    padding:12px;
     border-bottom:1px solid #eee;
     font-size:14px;
 }
+
 table th{
-    background:#e3ecff;   
-    color:#1e3a8a;        
-    font-weight:600;
+    background:#e3ecff;
+    color:#1e3a8a;
 }
 
-table tr:hover td{
-    background:#e9f0ff;
-    transition:0.2s;
-}
-
-.status{
-    padding:5px 10px;
-    border-radius:20px;
-    font-size:12px;
+.kuning{
+    color:orange;
     font-weight:bold;
+}
+
+.hijau{
+    color:green;
+    font-weight:bold;
+}
+
+.btn{
+    padding:6px 12px;
+    background:#1e3a8a;
     color:white;
+    text-decoration:none;
+    border-radius:8px;
+    font-size:13px;
 }
 
-.status.aktif{
-    background:#4CAF50;
+.btn:hover{
+    background:#163072;
 }
-
-.status.terlambat{
-    background:#dc3545;
-}
-
-/* NOTIFICATION BOX */
-.notif-box{
-    flex:2;
+.filter-box{
     background:white;
     padding:20px;
     border-radius:20px;
-    box-shadow:0 8px 15px rgba(0,0,0,0.08);
+    box-shadow:0 8px 20px rgba(0,0,0,0.08);
+    margin-bottom:20px;
 }
 
-.notif-item{
-    background:#f8f9fc;
-    padding:15px;
-    border-radius:15px;
+/* BARIS ATAS (SEIMBANG) */
+.filter-row{
+    display:flex;
+    gap:10px;
+    justify-content:space-between;
+    flex-wrap:wrap;
     margin-bottom:15px;
-    font-size:14px;
 }
 
-.notif-item span{
-    font-weight:bold;
-    color:#dc3545;
+.filter-row select,
+.filter-row button{
+    flex:1;
+    min-width:150px;
+    padding:8px 12px;
+    border-radius:10px;
+    border:1px solid #ddd;
 }
 
-.chart-box{
-    margin-top:1px;
-    background:white;
-    padding:25px;
-    border-radius:20px;
-    box-shadow:0 8px 15px rgba(0,0,0,0.08);
-    transition:0.3s;
-}
-
-.chart-box:hover{
-    transform:translateY(-5px);
-    box-shadow:0 12px 20px rgba(0,0,0,0.15);
-}
-.lihat-wrapper{
-    text-align:center;
-    margin-top:25px;
-}
-
-.lihat-btn{
-    display:inline-block;
-    text-decoration:none;
+.filter-row button{
     background:#1e3a8a;
     color:white;
-    padding:10px 25px;
-    border-radius:30px;
-    font-size:14px;
-    font-weight:500;
+    border:none;
+    cursor:pointer;
     transition:0.3s;
 }
 
-.lihat-btn i{
-    margin-right:8px;
+.filter-row button:hover{
+    background:#163072;
 }
 
-.lihat-btn:hover{
-    background:#163072;
-    transform:translateY(-3px);
-    box-shadow:0 10px 18px rgba(0,0,0,0.2);
+/* SEARCH DI BAWAH */
+.filter-search input{
+    width: 98%;
+    padding:8px 12px;
+    border-radius:10px;
+    border:1px solid #ddd;
+    outline:none;
+    transition:0.3s;
 }
-</style>
+
+.filter-search input:focus{
+    border-color:#1e3a8a;
+    box-shadow:0 0 5px rgba(30,58,138,0.3);
+}
+
+        .btn{
+            padding:6px 12px;
+            border-radius:8px;
+            text-decoration:none;
+            font-size:13px;
+            color:white;
+        }
+
+        .kembali{
+            background:#28a745;
+        }
+
+        .kembali:hover{
+            background:#218838;
+        }
+
+        .denda{
+            color:#ff6600;
+            font-weight:600;
+        }
+        .terlambat-row{
+    background:#fff4f4;
+}
+    </style>
 </head>
 
 <body>
 
-<!-- HEADER -->
 <div class="header">
     <div class="logo">
         <img src="{{ asset('assets/images/logo.png') }}">
@@ -446,7 +407,7 @@ table tr:hover td{
     </div>
 
     <div class="menu">
-        <a href="{{ route('petugas.dashboard') }}" class="active">
+        <a href="{{ route('petugas.dashboard') }}">
             <i class="fas fa-home"></i>Dashboard
         </a>
 
@@ -454,11 +415,11 @@ table tr:hover td{
             <i class="fas fa-book"></i>Data Buku
         </a>
 
-        <a href="/petugas/anggota">
+        <a href="/petugas/Anggota">
             <i class="fas fa-users"></i>Data Anggota
         </a>
 
-        <a href="/petugas/peminjaman">
+        <a href="/petugas/peminjaman" class="active">
             <i class="fas fa-book-reader"></i>Peminjaman
         </a>
 
@@ -476,113 +437,110 @@ table tr:hover td{
 <!-- CONTENT -->
 <div class="content">
 
-    <div class="cards">
+    <h2>Data Peminjaman</h2>
 
-        <div class="stat-card blue">
-            <i class="fas fa-book"></i>
-            <h3>{{ $total_buku }}</h3>
-            Total Buku
+    <div class="table-box">
+
+        <!-- FILTER -->
+        <div class="filter-box">
+            <form method="GET">
+
+                <div class="filter-row">
+
+                    <select name="status_pinjam">
+                        <option value="">Semua Status</option>
+                        <option value="dipinjam" {{ $status=='dipinjam'?'selected':'' }}>
+                            Belum Dikembalikan
+                        </option>
+                        <option value="terlambat" {{ $status=='terlambat'?'selected':'' }}>
+                            Terlambat
+                        </option>
+                        <option value="menunggu" {{ $status=='menunggu'?'selected':'' }}>
+                            Menunggu Konfirmasi
+                        </option>
+                        <option value="dikembalikan" {{ $status=='dikembalikan'?'selected':'' }}>
+                            Sudah Dikembalikan
+                        </option>
+                    </select>
+
+                    <input type="date" name="dari" value="{{ $dari }}">
+                    <input type="date" name="sampai" value="{{ $sampai }}">
+
+                    <button type="submit">
+                        Filter
+                    </button>
+
+                </div>
+
+                <div class="filter-search">
+                    <input type="text" name="search" 
+                           placeholder="Cari nama / judul..."
+                           value="{{ $search }}">
+                </div>
+
+            </form>
         </div>
 
-        <div class="stat-card green">
-            <i class="fas fa-users"></i>
-            <h3>{{ $total_anggota }}</h3>
-            Total Anggota
-        </div>
+        <!-- TABEL MASUK KE DALAM BOX -->
+        <table>
+            <tr>
+                <th>No</th>
+                <th>Nama</th>
+                <th>Buku</th>
+                <th>Jumlah</th>
+                <th>Tanggal Pinjam</th>
+                <th>Tenggat</th>
+                <th>Tanggal Kembali</th>
+                <th>Denda</th>
+                <th>Status</th>
+                <th>Aksi</th>
+            </tr>
 
-        <div class="stat-card yellow">
-            <i class="fas fa-book-reader"></i>
-            <h3>{{ $total_pinjam }}</h3>
-            Peminjaman Aktif
-        </div>
+            @foreach($data as $i => $row)
+            <tr class="{{ (!$row->tgl_pengembalian && $row->tenggat_waktu < date('Y-m-d')) ? 'terlambat-row' : '' }}">
 
-        <div class="stat-card lightblue">
-            <i class="fas fa-undo"></i>
-            <h3>{{ $total_kembali_hariini }}</h3>
-            Pengembalian Hari Ini
-        </div>
+                <td>{{ $i+1 }}</td>
+                <td>{{ $row->username }}</td>
+                <td>{{ $row->judul }}</td>
+                <td>{{ $row->jumlah }}</td>
+                <td>{{ $row->tgl_peminjaman }}</td>
+                <td>{{ $row->tenggat_waktu }}</td>
 
-    </div>
+                <td>
+                    {{ $row->tgl_pengembalian ?? '-' }}
+                </td>
 
-    <div class="dashboard-bottom">
+                <td class="denda">
+                    {{ $row->denda ? 'Rp '.number_format($row->denda) : '-' }}
+                </td>
 
-        <!-- TABLE -->
-        <div class="table-box">
-            <table>
-                <tr>
-                    <th>Nama</th>
-                    <th>Judul Buku</th>
-                    <th>Tanggal</th>
-                    <th>Status</th>
-                </tr>
+                <td>
+                    @if($row->tgl_pengembalian)
+                        <span class="hijau">Sudah Dikembalikan</span>
+                    @elseif($row->tenggat_waktu < date('Y-m-d'))
+                        <span class="kuning">Terlambat</span>
+                    @else
+                        <span style="color:red">Dipinjam</span>
+                    @endif
+                </td>
 
-                @forelse($peminjaman_terbaru as $row)
-                    @php
-                        $status_class = $row->selisih_hari > 7 ? 'terlambat' : 'aktif';
-                        $status_text = $row->selisih_hari > 7 ? 'Terlambat' : 'Aktif';
-                    @endphp
+                <td>
+                    @if(!$row->tgl_pengembalian)
+                        <a href="{{ route('petugas.peminjaman', ['kembalikan'=>$row->id_peminjaman]) }}"
+                           onclick="return confirm('Kembalikan buku ini sekarang?')"
+                           class="btn kembali">
+                           Kembalikan
+                        </a>
+                    @endif
+                </td>
 
-                    <tr>
-                        <td>{{ $row->username }}</td>
-                        <td>{{ $row->judul }}</td>
-                        <td>{{ $row->tgl_peminjaman }}</td>
-                        <td>
-                            <span class="status {{ $status_class }}">
-                                {{ $status_text }}
-                            </span>
-                        </td>
-                    </tr>
-                @empty
-                    <tr><td colspan="4">Belum ada peminjaman.</td></tr>
-                @endforelse
-            </table>
+            </tr>
+            @endforeach
 
-            <div class="lihat-wrapper">
-                <a href="/petugas/peminjaman" class="lihat-btn">
-                    <i class="fas fa-eye"></i> Lihat Selengkapnya
-                </a>
-            </div>
-        </div>
+        </table>
 
-        <!-- CHART -->
-        <div class="chart-box">
-            <h3>Statistik Peminjaman 7 Hari Terakhir</h3>
-            <canvas id="myChart"></canvas>
-        </div>
+    </div> <!-- PENUTUP table-box -->
 
-    </div>
 </div>
-
-<script>
-const ctx = document.getElementById('myChart');
-
-new Chart(ctx, {
-    type: 'line',
-    data: {
-        labels: [
-            @for($i=6; $i>=0; $i--)
-                "{{ \Carbon\Carbon::now()->subDays($i)->format('d M') }}",
-            @endfor
-        ],
-        datasets: [
-        {
-            label: 'Peminjaman',
-            data: @json($data_chart),
-            borderColor: '#3b82f6',
-            borderWidth: 3,
-            tension: 0.3
-        },
-        {
-            label: 'Pengembalian',
-            data: @json($data_kembali),
-            borderColor: '#f4b400',
-            borderWidth: 3,
-            tension: 0.3
-        }
-        ]
-    }
-});
-</script>
-
 </body>
 </html>
